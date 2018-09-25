@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-argument
 """Test base objects."""
-import aws_lambda as al
+import pal
 
 
 def test_base_request():
     """Test base Request."""
-    request = al.Request({}, {})
+    request = pal.Request({}, {})
     assert request.event is not None
     assert request.context is not None
 
@@ -15,13 +15,13 @@ def test_base_request():
 def test_base_handler():
     """Test base Handler."""
 
-    class TestHandler(al.Handler):
+    class TestHandler(pal.Handler):
         """Test handler."""
 
         def perform(self, request, **k):
             """Test perform method."""
             body = self.request.event['att']
-            response = al.Response()
+            response = pal.Response()
             response.body = body
             return response
 

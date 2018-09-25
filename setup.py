@@ -13,9 +13,9 @@ from shutil import rmtree
 from setuptools import Command, find_packages, setup
 
 # Package meta-data.
-NAME = 'aws_lambda'
+NAME = 'pal'
 DESCRIPTION = 'Better AWS Lambda handlers.'
-URL = 'https://github.com/hmngwy/python-lambda-handlers'
+URL = 'https://github.com/hmngwy/py-aws-lambda-handlers/'
 EMAIL = 'patambrosio@me.com'
 AUTHOR = 'Pat Ambrosio'
 REQUIRES_PYTHON = '>=3.6.0'

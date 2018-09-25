@@ -6,10 +6,10 @@ from collections import namedtuple
 import inflection
 from cached_property import cached_property
 
-import aws_lambda as al
+import pal
 
 
-class APIGatewayRequest(al.Request):
+class APIGatewayRequest(pal.Request):
     """API Gateway Request class."""
 
     def __init__(self, event, context):
@@ -53,7 +53,7 @@ class APIGatewayRequest(al.Request):
         return the_tuple
 
 
-class APIGatewayResponse(al.Response):
+class APIGatewayResponse(pal.Response):
     """API Gateway Response class."""
 
     def __init__(self, body, status_code=200, headers=None, is_base64=False):
