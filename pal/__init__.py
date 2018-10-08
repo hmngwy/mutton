@@ -33,7 +33,7 @@ class Request():
         return self.__context
 
 
-class Response(collections.MutableMapping, dict):
+class Response(collections.MutableMapping):
     """Base Response class."""
 
     key_map = {}
@@ -86,6 +86,10 @@ class Response(collections.MutableMapping, dict):
         """Stub serializer."""
         return value
 
+    def to_dict(self):
+        """Return dictionary version."""
+        return self.__store
+
 
 class Handler():
     """Base Handler."""
@@ -100,11 +104,10 @@ class Handler():
         self.__init__()  # reset the instance
 
         self.request = self.request_class(event, context)
-        return self.perform(  # pylint: disable=assignment-from-no-return
-            self.request,
-            **kwargs)
+        response = self.perform(self.request, **kwargs)
 
-    # pylint: disable=unused-argument,no-self-use
+        return response.to_dict()
+
     def perform(self, request, **kwargs):
         """Stub perform method."""
-        raise ValueError('Handler.perform() method not implemented.')
+        raise NotImplementedError
