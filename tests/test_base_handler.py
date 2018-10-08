@@ -29,3 +29,11 @@ def test_base_handler():
     invocation = test_handler(request_object, {})
 
     assert invocation['body'] == 1.0
+
+
+def test_base_response():
+    """Test base Response."""
+    response = pal.Response()
+    response.body = 'hello'
+
+    assert response.to_dict()['body'] == 'hello'
