@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-lambda-handlers = {editable = true, path = "."}
 "e1839a8" = {path = ".", editable = true}
+pytest-cov = "*"
 
 [dev-packages]
 bumpversion = "*"

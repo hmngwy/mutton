@@ -8,8 +8,10 @@ import pal
 def test_base_request():
     """Test base Request."""
     request = pal.Request({}, {})
-    assert request.event is not None
-    assert request.context is not None
+    request.event = {'hi': 'hello'}
+    request.context = {'hi': 'hello'}
+    assert request.event['hi'] == 'hello'
+    assert request.context['hi'] == 'hello'
 
 
 def test_base_handler():
@@ -34,6 +36,22 @@ def test_base_handler():
 def test_base_response():
     """Test base Response."""
     response = pal.Response()
-    response.body = 'hello'
 
+    response['test'] = 'hi'
+    assert response['test'] == 'hi'
+
+    del response['test']
+    assert 'test' not in response.to_dict()
+
+    x = [x for x in response]
+    assert x
+
+    response.body = 'hello'
     assert response.to_dict()['body'] == 'hello'
+    assert response['body'] == 'hello'
+
+    response.key_map['test'] = 'test'
+    response.test = 'hello'
+    assert response['test'] == 'hello'
+
+    assert len(response) == len('hello')

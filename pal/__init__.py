@@ -37,20 +37,21 @@ class Response(collections.MutableMapping):
     """Base Response class."""
 
     key_map = {}
-    __store = {}
+    store = {}
 
     def __init__(self, body=None):
         """Initialize instance."""
         super().__init__()
         self.key_map = {'body': 'body'}
-        self.__store = {'body': body}
+        self.store = {'body': body}
 
     def __setattr__(self, name, value):
         """Set attribute with some manually managed attributes."""
         if name in super().__getattribute__('key_map').keys():
             store_key = self.key_map[name]
             if name == 'body':
-                self.__store[store_key] = self.body_serializer(value)
+                value = self.body_serializer(value)
+            self.store[store_key] = value
         else:
             super().__setattr__(name, value)
 
@@ -58,28 +59,28 @@ class Response(collections.MutableMapping):
         """Return attributes with some manually managed attributes."""
         if name in super().__getattribute__('key_map').keys():
             store_key = self.key_map[name]
-            return self.__store[store_key]
+            return self.store[store_key]
         return super().__getattribute__(name)
 
     def __getitem__(self, key):
         """Get subscript item."""
-        return self.__store[key]
+        return self.store[key]
 
     def __setitem__(self, key, value):
         """Set subscript item."""
-        self.__store[key] = value
+        self.store[key] = value
 
     def __delitem__(self, key):
         """Delete subscript item."""
-        del self.__store[key]
+        del self.store[key]
 
     def __iter__(self):
         """Iterator."""
-        return iter(self.__store)
+        return iter(self.store)
 
     def __len__(self):
         """Return response content length."""
-        return len(self.__store['body'])
+        return len(self.store['body'])
 
     @staticmethod
     def body_serializer(value):
@@ -88,7 +89,7 @@ class Response(collections.MutableMapping):
 
     def to_dict(self):
         """Return dictionary version."""
-        return self.__store
+        return self.store
 
 
 class Handler():

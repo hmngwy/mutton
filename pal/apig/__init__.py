@@ -21,9 +21,10 @@ class APIGatewayRequest(pal.Request):
         self.__request_context = event.get('requestContext', {})
         self.__headers = event.get('headers', {})
 
+    @cached_property
     def body(self):
-        """Return JSON request body as a native python data type."""
-        return self.__body
+        """Return string repr of body."""
+        return str(self.__body)
 
     @cached_property
     def headers(self):
@@ -56,10 +57,11 @@ class APIGatewayRequest(pal.Request):
 class APIGatewayResponse(pal.Response):
     """API Gateway Response class."""
 
-    def __init__(self, body, status_code=200, headers=None, is_base64=False):
+    def __init__(self, body='', status_code=200,
+                 headers=None, is_base64=False):
         """Initialize instance with list, tuple, or dict."""
         super().__init__()
-        self.__store = {}
+        self.store = {}
         self.__base_headers = {
             # 'Access-Control-Allow-Origin': '*',
             'X-Server': 'AWS λ'
@@ -75,6 +77,7 @@ class APIGatewayResponse(pal.Response):
         if not isinstance(status_code, int):
             raise ValueError('Status Code value must be int.')
 
+        self.headers = {}
         if headers:
             self.headers = headers
 
@@ -85,16 +88,29 @@ class APIGatewayResponse(pal.Response):
     def __setattr__(self, name, value):
         """Set attribute with some manually managed attributes."""
         # prevent recursion
-        if name in ['key_map', '__store']:
+        if name in ['key_map', 'store']:
             super().__setattr__(name, value)
         # process managed atts
         if name in self.key_map.keys():
             store_key = self.key_map[name]
             if name == 'headers':
-                self.__store[store_key] = {**self.__base_headers, **value}
+                self.store[store_key] = {**self.__base_headers, **value}
             elif name == 'body':
-                self.__store[store_key] = self.body_serializer(value)
+                self.store[store_key] = self.body_serializer(value)
             elif name in ('status_code', 'is_base64'):
-                self.__store[store_key] = value
+                self.store[store_key] = value
         else:
             super().__setattr__(name, value)
+
+
+class APIGatewayHandler(pal.Handler):
+
+    def __init__(self):
+        """Initialize the handler."""
+        super().__init__()
+        self.request_class = APIGatewayRequest
+        self.request = None
+
+    def perform(self, request, **kwargs):
+        """Stub perform method."""
+        raise NotImplementedError
