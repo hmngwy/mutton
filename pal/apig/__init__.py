@@ -94,11 +94,10 @@ class APIGatewayResponse(pal.Response):
         if name in self.key_map.keys():
             store_key = self.key_map[name]
             if name == 'headers':
-                self.store[store_key] = {**self.__base_headers, **value}
+                value = {**self.__base_headers, **value}
             elif name == 'body':
-                self.store[store_key] = self.body_serializer(value)
-            elif name in ('status_code', 'is_base64'):
-                self.store[store_key] = value
+                value = self.body_serializer(value)
+            self.store[store_key] = value
         else:
             super().__setattr__(name, value)
 

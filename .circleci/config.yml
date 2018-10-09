@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6.4
+
+    steps:
+      - checkout
+
+      - run:
+          name: Set Environment
+          command: |
+            export PIPENV_VENV_IN_PROJECT=true
+
+      - restore_cache:
+          keys:
+              - cache-{{ checksum "Pipfile.lock" }}
+              - cache-
+
+      - run:
+          name: Install dependencies
+          command: |
+            pipenv run python setup.py install
+            pipenv sync --dev
+
+      - save_cache:
+          key: cache-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
+
+      - run:
+          name: Run Tests
+          command: |
+            pipenv run pytest
+            pipenv run bash <(curl -s https://codecov.io/bash)
+
+workflows:
+  version: 2
+  test_and_publish:
+    jobs:
+      - test

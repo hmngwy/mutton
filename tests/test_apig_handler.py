@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-argument
 """Test base objects."""
+import pytest
 import pal.apig as pal
 
 
@@ -43,16 +44,23 @@ def test_apig_response():
     response.is_base64 = True
     assert response.is_base64
 
-    response.status_code = 400
-
     response.__setattr__('asd', 'qwe')
     assert response.asd == 'qwe'
 
+    response.test = 'hey'
+    assert response.test == 'hey'
+
+    response.status_code = 400
     as_dict = response.to_dict()
     assert as_dict['statusCode'] == 400
     assert as_dict['body'] == 'test body'
     assert as_dict['isBase64Encoded']
     assert 'X-Custom' in as_dict['headers']
+
+    response = pal.APIGatewayResponse('Hi',
+                                      status_code=200,
+                                      headers={'X-Custom': 'defined on init'})
+    assert response.headers['X-Custom'] == 'defined on init'
 
 
 def test_apig_handler():
@@ -84,3 +92,11 @@ def test_apig_handler():
     invocation = test_handler(request_object, {})
     assert invocation['body'] == 'user-1234asc'
     assert 'X-Custom' in invocation['headers']
+
+
+def test_apig_bad_response():
+    """Test raised exceptions."""
+    with pytest.raises(ValueError):
+        pal.APIGatewayResponse('Hi', headers='bad headers', status_code=200)
+    with pytest.raises(ValueError):
+        pal.APIGatewayResponse('Hi', status_code='not-an-int')
