@@ -17,11 +17,11 @@ This isn't ideal when you start dealing with more than one handler, or if you wa
 
 The `Handler` class is a [callable](https://en.wikipedia.org/wiki/Callable_object), you create a subclass off of this, instantiate it, and that's what you configure AWSλ to invoke.
 
-Your `Handler` has to have a `perform(self, request)` method, this is houses handler's business logic, `Handler.__call__` executes this function and expects a `Response` object.
+Your `Handler` has to have a `perform(self, request)` method, this houses your handler's business logic, `Handler.__call__` executes this function and expects a `Response` object.
 
 The `Response` object behaves like a dictionary, because AWSλ expects a handler to return a dictionary, your `Response` object is finally serialized as a `dict`.
 
-The `request` argument in `perform(self, request)` is a `Request` object, and it houses the `event` and `context` parameters that AWSλ passes to your handler. Packaging those handler arguments into an object makes these arguments available for transparent mutations, see [`aws_lambda.apig.APIGatewayRequest`](py-aws-lambda-handler/aws_lambda/apig/\_\_init\_\_.py) for reference.
+The `request` argument in `perform(self, request)` is a `Request` object, and it houses the `event` and `context` parameters that AWSλ passes to your handler. Packaging those handler arguments into an object makes them available for transparent mutations, see [`aws_lambda.apig.APIGatewayRequest`](py-aws-lambda-handler/aws_lambda/apig/\_\_init\_\_.py) for reference.
 
 The foundation of this library is tiny, I recommend reviewing the [main classes](py-aws-lambda-handler/aws_lambda/__init__.py) to further understand how to use this package.
 
