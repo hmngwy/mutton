@@ -51,7 +51,7 @@ def test_apig_response():
     assert response.test == 'hey'
 
     response.status_code = 400
-    as_dict = response.to_dict()
+    as_dict = response.serialized
     assert as_dict['statusCode'] == 400
     assert as_dict['body'] == 'test body'
     assert as_dict['isBase64Encoded']

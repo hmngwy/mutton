@@ -23,31 +23,33 @@ def test_base_handler():
         def perform(self, request, **k):
             """Test perform method."""
             response = aws_lambda.Response()
-            response.body = self.request.event['att']
+            response.body = self.request.event['value']
             return response
 
     test_handler = TestHandler()
-    request_object = {'att': 1.0}
+    request_object = {'value': 1.0}
     invocation = test_handler(request_object, {})
 
-    assert invocation['body'] == 1.0
+    assert invocation == '1.0'
 
 
 def test_base_response():
     """Test base Response."""
     response = aws_lambda.Response()
 
+    # test setitem
     response['test'] = 'hi'
     assert response['test'] == 'hi'
 
+    # test delitem
     del response['test']
-    assert 'test' not in response.to_dict()
+    assert 'test' not in response.store
 
     x = [x for x in response]
     assert x
 
     response.body = 'hello'
-    assert response.to_dict()['body'] == 'hello'
+    assert response.serialized == 'hello'
     assert response['body'] == 'hello'
 
     response.key_map['test'] = 'test'

@@ -19,7 +19,7 @@ The `Handler` class is a [callable](https://en.wikipedia.org/wiki/Callable_objec
 
 Your `Handler` has to have a `perform(self, request)` method, this houses your handler's business logic, `Handler.__call__` executes this function and expects a `Response` object.
 
-The `Response` object behaves like a dictionary, because AWSλ expects a handler to return a dictionary, your `Response` object is finally serialized as a `dict`.
+The `Response` object behaves like a dictionary and an object, an attribute called `serialized` is returned to AWSλ.
 
 The `request` argument in `perform(self, request)` is a `Request` object, and it houses the `event` and `context` parameters that AWSλ passes to your handler. Packaging those handler arguments into an object makes them available for transparent mutations, see [`aws_lambda.apig.APIGatewayRequest`](py-aws-lambda-handler/aws_lambda/apig/\_\_init\_\_.py) for reference.
 

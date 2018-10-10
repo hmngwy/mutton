@@ -95,11 +95,13 @@ class APIGatewayResponse(aws_lambda.Response):
             store_key = self.key_map[name]
             if name == 'headers':
                 value = {**self.__base_headers, **value}
-            elif name == 'body':
-                value = self.body_serializer(value)
             self.store[store_key] = value
         else:
             super().__setattr__(name, value)
+
+    @property
+    def serialized(self):
+        return self.store
 
 
 class APIGatewayHandler(aws_lambda.Handler):
