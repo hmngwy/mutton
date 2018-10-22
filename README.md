@@ -2,7 +2,7 @@
 
 ![](https://codecov.io/gh/hmngwy/mutton/branch/develop/graphs/tree.svg?height=70&width=898)
 
-## muttons
+## mutton
 
 Better Python 3 AWS Lambda Handlers.
 
