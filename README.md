@@ -1,8 +1,8 @@
-[![CircleCI](https://circleci.com/gh/hmngwy/py-aws-lambda-handler.svg?style=svg)](https://circleci.com/gh/hmngwy/py-aws-lambda-handler) [![codecov](https://codecov.io/gh/hmngwy/py-aws-lambda-handler/branch/develop/graph/badge.svg)](https://codecov.io/gh/hmngwy/py-aws-lambda-handler)
+[![CircleCI](https://circleci.com/gh/hmngwy/mutton.svg?style=svg)](https://circleci.com/gh/hmngwy/mutton) [![codecov](https://codecov.io/gh/hmngwy/mutton/branch/develop/graph/badge.svg)](https://codecov.io/gh/hmngwy/mutton)
 
-![](https://codecov.io/gh/hmngwy/py-aws-lambda-handler/branch/develop/graphs/tree.svg?height=70&width=898)
+![](https://codecov.io/gh/hmngwy/mutton/branch/develop/graphs/tree.svg?height=70&width=898)
 
-## aws-lambda-handlers
+## muttons
 
 Better Python 3 AWS Lambda Handlers.
 
@@ -21,25 +21,25 @@ Your `Handler` has to have a `perform(self, request)` method, this houses your h
 
 The `Response` object behaves like a dictionary and an object, an attribute called `serialized` is returned to AWSλ.
 
-The `request` argument in `perform(self, request)` is a `Request` object, and it houses the `event` and `context` parameters that AWSλ passes to your handler. Packaging those handler arguments into an object makes them available for transparent mutations, see [`aws_lambda.apig.APIGatewayRequest`](py-aws-lambda-handler/aws_lambda/apig/\_\_init\_\_.py) for reference.
+The `request` argument in `perform(self, request)` is a `Request` object, and it houses the `event` and `context` parameters that AWSλ passes to your handler. Packaging those handler arguments into an object makes them available for transparent mutations, see [`mutton.apig.APIGatewayRequest`](mutton/mutton/apig/\_\_init\_\_.py) for reference.
 
-The foundation of this library is tiny, I recommend reviewing the [main classes](py-aws-lambda-handler/aws_lambda/__init__.py) to further understand how to use this package.
+The foundation of this library is tiny, I recommend reviewing the [main classes](mutton/mutton/__init__.py) to further understand how to use this package.
 
 ### Usage
 
 ```
-pip install aws-lambda-handler
+pip install mutton
 ```
 
 ```python
-import aws_lambda
+import mutton
 
-class EchoHandler(aws_lambda.Handler):
+class EchoHandler(mutton.Handler):
     """Echo handler."""
 
     def perform(self, request, **k):
         """Echo perform method."""
-        response = aws_lambda.Response()
+        response = mutton.Response()
         response.body = self.request.event
         return response
 
@@ -59,7 +59,7 @@ pipenv run pytest # test
 
 ### Supported Event Sources
 
-- [x] API Gateway `aws_lambda.apig`
+- [x] API Gateway `mutton.apig`
 - [ ] S3
 - [ ] DynamoDB
 - [ ] SNS
@@ -70,4 +70,4 @@ pipenv run pytest # test
 
 #### Help
 
-We want support for more event sources, I am willing to entertain PRs. You can use the `aws_lambda.apig` submodule as an example of implementing more event sources.
+We want support for more event sources, I am willing to entertain PRs. You can use the `mutton.apig` submodule as an example of implementing more event sources.

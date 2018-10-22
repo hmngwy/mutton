@@ -21,7 +21,7 @@ sleep 3
 ROLEARN=$(aws iam get-role --role-name example-lambda-role | cut -f2 | head -n1)
 
 aws lambda create-function \
-    --function-name aws-lambda-handler-basic-example \
+    --function-name mutton-basic-example \
     --zip-file fileb://$TEMPZIP/archive.zip \
     --role $ROLEARN \
     --handler handler.basic \
@@ -29,7 +29,7 @@ aws lambda create-function \
 
 aws lambda invoke \
     --invocation-type RequestResponse \
-    --function-name aws-lambda-handler-basic-example \
+    --function-name mutton-basic-example \
     --log-type Tail \
     --payload '{"echo":"me"}' \
     response.json
@@ -38,7 +38,7 @@ cat response.json
 rm response.json
 
 aws lambda delete-function \
-    --function-name aws-lambda-handler-basic-example
+    --function-name mutton-basic-example
 
 aws iam detach-role-policy \
     --role-name example-lambda-role \

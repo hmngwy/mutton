@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import aws_lambda
+import mutton
 
 
-class BasicHandler(aws_lambda.Handler):
+class BasicHandler(mutton.Handler):
     """Test handler."""
 
     def perform(self, request, **k):
         """Test perform method."""
-        response = aws_lambda.Response()
+        response = mutton.Response()
         response.body = request.event
         return response
 

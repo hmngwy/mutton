@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-argument
 """Test base objects."""
-import aws_lambda
+import mutton
 
 
 def test_base_request():
     """Test base Request."""
-    request = aws_lambda.Request({}, {})
+    request = mutton.Request({}, {})
     request.event = {'hi': 'hello'}
     request.context = {'hi': 'hello'}
     assert request.event['hi'] == 'hello'
@@ -17,12 +17,12 @@ def test_base_request():
 def test_base_handler():
     """Test base Handler."""
 
-    class TestHandler(aws_lambda.Handler):
+    class TestHandler(mutton.Handler):
         """Test handler."""
 
         def perform(self, request, **k):
             """Test perform method."""
-            response = aws_lambda.Response()
+            response = mutton.Response()
             response.body = self.request.event['value']
             return response
 
@@ -35,7 +35,7 @@ def test_base_handler():
 
 def test_base_response():
     """Test base Response."""
-    response = aws_lambda.Response()
+    response = mutton.Response()
 
     # test setitem
     response['test'] = 'hi'

@@ -6,10 +6,10 @@ from collections import namedtuple
 import inflection
 from cached_property import cached_property
 
-import aws_lambda
+import mutton
 
 
-class APIGatewayRequest(aws_lambda.Request):
+class APIGatewayRequest(mutton.Request):
     """API Gateway Request class."""
 
     def __init__(self, event, context):
@@ -54,7 +54,7 @@ class APIGatewayRequest(aws_lambda.Request):
         return the_tuple
 
 
-class APIGatewayResponse(aws_lambda.Response):
+class APIGatewayResponse(mutton.Response):
     """API Gateway Response class."""
 
     def __init__(self, body='', status_code=200,
@@ -104,7 +104,7 @@ class APIGatewayResponse(aws_lambda.Response):
         return self.store
 
 
-class APIGatewayHandler(aws_lambda.Handler):
+class APIGatewayHandler(mutton.Handler):
 
     def __init__(self):
         """Initialize the handler."""
