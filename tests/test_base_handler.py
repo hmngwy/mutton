@@ -30,7 +30,7 @@ def test_base_handler():
     request_object = {'value': 1.0}
     invocation = test_handler(request_object, {})
 
-    assert invocation == '1.0'
+    assert invocation == 1.0
 
 
 def test_base_response():
