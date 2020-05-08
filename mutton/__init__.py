@@ -85,7 +85,7 @@ class Response(collections.MutableMapping):
     @property
     def serialized(self):
         """Stub serializer."""
-        return str(self.body)
+        return self.body
 
 
 class Handler():
