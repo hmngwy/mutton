@@ -19,7 +19,7 @@ URL = 'https://github.com/hmngwy/mutton/'
 EMAIL = 'patambrosio@me.com'
 AUTHOR = 'Pat Ambrosio'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.0.5'
+VERSION = '0.0.6'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
