@@ -6,10 +6,10 @@ from collections import namedtuple
 import inflection
 from cached_property import cached_property
 
-import pal
+import mutton
 
 
-class APIGatewayRequest(pal.Request):
+class APIGatewayRequest(mutton.Request):
     """API Gateway Request class."""
 
     def __init__(self, event, context):
@@ -54,7 +54,7 @@ class APIGatewayRequest(pal.Request):
         return the_tuple
 
 
-class APIGatewayResponse(pal.Response):
+class APIGatewayResponse(mutton.Response):
     """API Gateway Response class."""
 
     def __init__(self, body='', status_code=200,
@@ -95,14 +95,16 @@ class APIGatewayResponse(pal.Response):
             store_key = self.key_map[name]
             if name == 'headers':
                 value = {**self.__base_headers, **value}
-            elif name == 'body':
-                value = self.body_serializer(value)
             self.store[store_key] = value
         else:
             super().__setattr__(name, value)
 
+    @property
+    def serialized(self):
+        return self.store
 
-class APIGatewayHandler(pal.Handler):
+
+class APIGatewayHandler(mutton.Handler):
 
     def __init__(self):
         """Initialize the handler."""

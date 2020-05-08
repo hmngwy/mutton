@@ -13,13 +13,13 @@ from shutil import rmtree
 from setuptools import Command, find_packages, setup
 
 # Package meta-data.
-NAME = 'pal'
+NAME = 'mutton'
 DESCRIPTION = 'Better AWS Lambda handlers.'
-URL = 'https://github.com/hmngwy/py-aws-lambda-handlers/'
+URL = 'https://github.com/hmngwy/mutton/'
 EMAIL = 'patambrosio@me.com'
 AUTHOR = 'Pat Ambrosio'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.0'
+VERSION = '0.0.6'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -121,7 +121,7 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',

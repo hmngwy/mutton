@@ -42,15 +42,15 @@ class Response(collections.MutableMapping):
     def __init__(self, body=None):
         """Initialize instance."""
         super().__init__()
+        # keys here will be managed in self.store
         self.key_map = {'body': 'body'}
-        self.store = {'body': body}
+        self.store = {}
+        self.body = body
 
     def __setattr__(self, name, value):
         """Set attribute with some manually managed attributes."""
         if name in super().__getattribute__('key_map').keys():
             store_key = self.key_map[name]
-            if name == 'body':
-                value = self.body_serializer(value)
             self.store[store_key] = value
         else:
             super().__setattr__(name, value)
@@ -82,14 +82,10 @@ class Response(collections.MutableMapping):
         """Return response content length."""
         return len(self.store['body'])
 
-    @staticmethod
-    def body_serializer(value):
+    @property
+    def serialized(self):
         """Stub serializer."""
-        return value
-
-    def to_dict(self):
-        """Return dictionary version."""
-        return self.store
+        return self.body
 
 
 class Handler():
@@ -107,7 +103,7 @@ class Handler():
         self.request = self.request_class(event, context)
         response = self.perform(self.request, **kwargs)
 
-        return response.to_dict()
+        return response.serialized
 
     def perform(self, request, **kwargs):
         """Stub perform method."""

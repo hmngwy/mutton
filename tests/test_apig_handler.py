@@ -3,12 +3,12 @@
 # pylint: disable=unused-argument
 """Test base objects."""
 import pytest
-import pal.apig as pal
+import mutton.apig as mutton
 
 
 def test_apig_request():
     """Test APIG Request."""
-    request = pal.APIGatewayRequest({
+    request = mutton.APIGatewayRequest({
         'body': 'hello',
         'headers': {
             'X-Client': 'APIG-REQUEST-TEST'
@@ -29,7 +29,7 @@ def test_apig_request():
 
 def test_apig_response():
     """Test APIG Response."""
-    response = pal.APIGatewayResponse('Hi', 200)
+    response = mutton.APIGatewayResponse('Hi', 200)
     assert response.status_code == 200
 
     response.body = 'test body'
@@ -51,27 +51,27 @@ def test_apig_response():
     assert response.test == 'hey'
 
     response.status_code = 400
-    as_dict = response.to_dict()
+    as_dict = response.serialized
     assert as_dict['statusCode'] == 400
     assert as_dict['body'] == 'test body'
     assert as_dict['isBase64Encoded']
     assert 'X-Custom' in as_dict['headers']
 
-    response = pal.APIGatewayResponse('Hi',
-                                      status_code=200,
-                                      headers={'X-Custom': 'defined on init'})
+    response = mutton.APIGatewayResponse('Hi',
+                                             status_code=200,
+                                             headers={'X-Custom': 'defined on init'})
     assert response.headers['X-Custom'] == 'defined on init'
 
 
 def test_apig_handler():
     """Test APIG Handler"""
 
-    class TestHandler(pal.APIGatewayHandler):
+    class TestHandler(mutton.APIGatewayHandler):
         """Test handler."""
 
         def perform(self, request, **k):
             """Test perform method."""
-            response = pal.APIGatewayResponse('', 200)
+            response = mutton.APIGatewayResponse('', 200)
             response.body = request.path.user_id + request.query.filter_x
             response.headers = {'X-Custom': 'test'}
             return response
@@ -97,6 +97,7 @@ def test_apig_handler():
 def test_apig_bad_response():
     """Test raised exceptions."""
     with pytest.raises(ValueError):
-        pal.APIGatewayResponse('Hi', headers='bad headers', status_code=200)
+        mutton.APIGatewayResponse(
+            'Hi', headers='bad headers', status_code=200)
     with pytest.raises(ValueError):
-        pal.APIGatewayResponse('Hi', status_code='not-an-int')
+        mutton.APIGatewayResponse('Hi', status_code='not-an-int')
