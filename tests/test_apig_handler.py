@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=unused-argument
 """Test base objects."""
-import pytest
 import mutton.apig as mutton
+import pytest
 
 
 def test_apig_request():
@@ -58,8 +58,8 @@ def test_apig_response():
     assert 'X-Custom' in as_dict['headers']
 
     response = mutton.APIGatewayResponse('Hi',
-                                             status_code=200,
-                                             headers={'X-Custom': 'defined on init'})
+                                         status_code=200,
+                                         headers={'X-Custom': 'defined on init'})
     assert response.headers['X-Custom'] == 'defined on init'
 
 
