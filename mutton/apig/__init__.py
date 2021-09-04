@@ -111,7 +111,3 @@ class APIGatewayHandler(mutton.Handler):
         super().__init__()
         self.request_class = APIGatewayRequest
         self.request = None
-
-    def perform(self, request, **kwargs):
-        """Stub perform method."""
-        raise NotImplementedError

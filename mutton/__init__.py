@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Base objects."""
 import collections
+from abc import ABC, abstractmethod
 
 
 class Request():
@@ -88,7 +89,7 @@ class Response(collections.MutableMapping):
         return self.body
 
 
-class Handler():
+class Handler(ABC):
     """Base Handler."""
 
     def __init__(self):
@@ -105,6 +106,6 @@ class Handler():
 
         return response.serialized
 
+    @abstractmethod
     def perform(self, request, **kwargs):
-        """Stub perform method."""
-        raise NotImplementedError
+        pass
