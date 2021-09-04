@@ -5,13 +5,13 @@
 import mutton.sqs as mutton
 
 
-def test_sqs_handler():
+def test_sqs_event_handler():
     """Test SQS Handler"""
 
     class TestHandler(mutton.SQSEventHandler):
         """Test handler."""
 
-        def processMessage(self, message):
+        def process_message(self, message):
             """Test processMessage method."""
             assert message.message_id == "1111"
             assert message.receipt_handle == "2222"
@@ -52,4 +52,4 @@ def test_sqs_handler():
         ]
     }
     invocation = test_handler(request_object, {})
-    assert invocation == None
+    assert invocation is None

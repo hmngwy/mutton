@@ -1,5 +1,6 @@
-import mutton
 from cached_property import cached_property
+
+import mutton
 
 
 class SQSEventRequest(mutton.Request):
@@ -12,8 +13,8 @@ class SQSEventRequest(mutton.Request):
 
     @cached_property
     def records(self):
-        list = []
+        records = []
         for record in self.__records:
             message = mutton.sqs.SQSMessage(record)
-            list.append(message)
-        return list
+            records.append(message)
+        return records

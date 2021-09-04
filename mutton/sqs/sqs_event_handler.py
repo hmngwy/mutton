@@ -12,9 +12,9 @@ class SQSEventHandler(mutton.Handler):
 
     def perform(self, request, **kwargs):
         for record in request.records:
-            self.processMessage(record)
+            self.process_message(record)
         return mutton.sqs.SQSEventResponse()
 
     @abstractmethod
-    def processMessage(self, message):
+    def process_message(self, message):
         pass
