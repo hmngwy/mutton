@@ -1,9 +1,9 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 
 import mutton
 
 
-class SQSEventHandler(mutton.Handler):
+class SQSEventHandler(mutton.Handler, metaclass=ABCMeta):
 
     def __init__(self):
         """Initialize the handler."""
