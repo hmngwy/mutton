@@ -1,0 +1,4 @@
+mutton~=0.0.6
+pytest~=6.2.5
+inflection~=0.5.1
+setuptools~=57.4.0

@@ -104,3 +104,7 @@ venv.bak/
 .mypy_cache/
 
 coverage.xml
+
+# IntelliJ
+.idea/
+*.iml

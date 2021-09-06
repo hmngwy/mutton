@@ -64,7 +64,7 @@ pipenv run pytest # test
 - [ ] DynamoDB
 - [ ] SNS
 - [ ] SES
-- [ ] SQS
+- [x] SQS `mutton.sqs`
 - [ ] Cognito
 - [ ] Cloudwatch Logs, Events
 
